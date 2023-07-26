@@ -1,0 +1,213 @@
+import React from "react";
+import { createContext, useReducer, useEffect } from "react";
+import Reducer from "./Reducer";
+import { useNavigate } from "react-router-dom";
+
+const InventoryContext = createContext();
+
+function InventoryContextProvider({ children }) {
+   const [state, dispatch] = useReducer(Reducer, {
+      products: [],
+      purchase: [],
+      sales: [],
+   });
+
+   const navigate = useNavigate();
+
+   //products
+   const fetchAllProducts = async () => {
+      try {
+         const response = await fetch(
+            `${process.env.REACT_APP_SERVER}/products`
+         );
+         if (response.status === 200) {
+            const data = await response.json();
+            dispatch({
+               type: "FETCH_ALL_PRODUCTS",
+               payload: data,
+            });
+         }
+      } catch (error) {
+         console.log(error);
+      }
+   };
+
+   const deleteProduct = async (id) => {
+      try {
+         const response = await fetch(
+            `${process.env.REACT_APP_SERVER}/products/${id}`,
+            {
+               method: "DELETE",
+               headers: {
+                  "Content-Type": "application/json",
+               },
+            }
+         );
+         if (response.status === 201) {
+            const data = await response.json();
+            dispatch({
+               type: "DELETE_PRODUCT",
+               payload: id,
+            });
+         }
+      } catch (error) {
+         console.log(error);
+      }
+   };
+
+   const addProduct = async (product) => {
+      try {
+         const response = await fetch(
+            `${process.env.REACT_APP_SERVER}/products`,
+            {
+               method: "POST",
+               headers: {
+                  "Content-Type": "application/json",
+               },
+               body: JSON.stringify(product),
+            }
+         );
+         if (response.status === 201) {
+            const data = await response.json();
+            dispatch({
+               type: "ADD_PRODUCT",
+               payload: data,
+            });
+            navigate("/inventory");
+         }
+      } catch (error) {
+         console.log(error);
+      }
+   };
+
+   const updateProduct = async (product) => {
+      try {
+         const response = await fetch(
+            `${process.env.REACT_APP_SERVER}/products/${product._id}`,
+            {
+               method: "PUT",
+               headers: {
+                  "Content-Type": "application/json",
+               },
+               body: JSON.stringify(product),
+            }
+         );
+         if (response.status === 201) {
+            const data = await response.json();
+            dispatch({
+               type: "UPDATE_PRODUCT",
+               payload: data,
+            });
+         }
+      } catch (error) {
+         console.log(error);
+      }
+   };
+
+   //purchases
+   const fetchAllPurchases = async () => {
+      try {
+         const response = await fetch(
+            `${process.env.REACT_APP_SERVER}/purchased`
+         );
+         if (response.status === 200) {
+            const data = await response.json();
+            dispatch({
+               type: "FETCH_ALL_PURCHASE",
+               payload: data,
+            });
+         }
+      } catch (error) {
+         console.log(error);
+      }
+   };
+
+   const addPurchase = async (purchase) => {
+      try {
+         const response = await fetch(
+            `${process.env.REACT_APP_SERVER}/purchased`,
+            {
+               method: "POST",
+               headers: {
+                  "Content-Type": "application/json",
+               },
+               body: JSON.stringify(purchase),
+            }
+         );
+         if (response.status === 201) {
+            const data = await response.json();
+            dispatch({
+               type: "ADD_PURCHASE",
+               payload: data,
+            });
+         }
+      } catch (error) {
+         console.log(error);
+      }
+   };
+
+   //sales
+   const fetchAllSales = async () => {
+      try {
+         const response = await fetch(`${process.env.REACT_APP_SERVER}/sales`);
+         if (response.status === 200) {
+            const data = await response.json();
+            dispatch({
+               type: "FETCH_ALL_SALES",
+               payload: data,
+            });
+         }
+      } catch (error) {
+         console.log(error);
+      }
+   };
+
+   const addSales = async (sales) => {
+      try {
+         const response = await fetch(`${process.env.REACT_APP_SERVER}/sales`, {
+            method: "POST",
+            headers: {
+               "Content-Type": "application/json",
+            },
+            body: JSON.stringify(sales),
+         });
+         if (response.status === 201) {
+            const data = await response.json();
+            dispatch({
+               type: "ADD_SALES",
+               payload: data,
+            });
+         }
+      } catch (error) {
+         console.log(error);
+      }
+   };
+
+   useEffect(() => {
+      fetchAllProducts();
+
+      fetchAllPurchases();
+      fetchAllSales();
+   }, []);
+
+   return (
+      <InventoryContext.Provider
+         value={{
+            ...state,
+            fetchAllProducts,
+            deleteProduct,
+            addProduct,
+            updateProduct,
+            fetchAllPurchases,
+            addPurchase,
+            fetchAllSales,
+            addSales,
+         }}
+      >
+         {children}
+      </InventoryContext.Provider>
+   );
+}
+
+export default InventoryContext;
+export { InventoryContextProvider };
