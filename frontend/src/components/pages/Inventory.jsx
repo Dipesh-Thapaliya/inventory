@@ -2,8 +2,9 @@ import { useContext } from "react";
 import { Link } from "react-router-dom";
 
 import InventoryContext from "../context/InventoryContext";
+import SaleProduct from "../modal/SaleProduct";
 
-import { FaEdit, FaTrash, FaSellcast } from "react-icons/fa";
+import { FaEdit, FaTrash } from "react-icons/fa";
 
 export default function Inventory() {
    const { products } = useContext(InventoryContext);
@@ -43,7 +44,7 @@ export default function Inventory() {
                               <Link to={`/inventory/edit/${product._id}`}>
                                  <FaEdit className="text-blue-500 transition-all duration-150 hover:scale-125" />
                               </Link>
-                              <FaSellcast className="text-green-500 hover:cursor-pointer transition-all duration-150 hover:scale-125" />
+                              <SaleProduct quntity={product.quantity} />
                               <FaTrash className="text-red-500 hover:cursor-pointer transition-all duration-150 hover:scale-125" />
                            </div>
                         </td>

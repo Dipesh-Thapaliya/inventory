@@ -10,11 +10,12 @@ function InventoryContextProvider({ children }) {
       products: [],
       purchase: [],
       sales: [],
+      showDropdown: false,
    });
 
    const navigate = useNavigate();
 
-   //products
+   //products / add, update, delete, fetch
    const fetchAllProducts = async () => {
       try {
          const response = await fetch(
@@ -183,6 +184,19 @@ function InventoryContextProvider({ children }) {
       }
    };
 
+   //dropdown
+   const changeDropdownState = async () => {
+      try {
+         dispatch({
+            type: "CHANGE_DROPDOWN_STATE",
+            payload: !state.showDropdown,
+         });
+         console.log(!state.showDropdown);
+      } catch (e) {
+         console.log(e);
+      }
+   };
+
    useEffect(() => {
       fetchAllProducts();
 
@@ -202,6 +216,7 @@ function InventoryContextProvider({ children }) {
             addPurchase,
             fetchAllSales,
             addSales,
+            changeDropdownState,
          }}
       >
          {children}

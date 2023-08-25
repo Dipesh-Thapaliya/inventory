@@ -36,3 +36,20 @@ export const updateProduct = asyncHandler(async (req, res) => {
    });
    res.status(201).json(updateProduct);
 });
+
+// @desc    fetch about to expire product
+// @route   PUT /api/products/expire
+export const fetchAboutToExpireProduct = asyncHandler(async (req, res) => {
+   //
+   var today = new Date();
+   var addDays = new Date(today);
+   addDays.setDate(today.getDate() + 30);
+   var formattedDate = addDays.toISOString().substr(0, 10);
+   //
+   const fetchProduct = await ProductModel.find({
+      expiryDate: { $lt: formattedDate, $gt: today },
+   });
+   res.status(200).json(fetchProduct);
+
+   // res.send("hello world");
+});
