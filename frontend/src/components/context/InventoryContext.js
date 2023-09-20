@@ -105,6 +105,30 @@ function InventoryContextProvider({ children }) {
       }
    };
 
+   const sellProduct = async (product, quantity) => {
+      try {
+         let updatedProduct = { quantity: product.quantity - quantity };
+         const response = await fetch(
+            `${process.env.REACT_APP_SERVER}/products/${product._id}`,
+            {
+               method: "PUT",
+               headers: {
+                  "Content-Type": "application/json",
+               },
+               body: JSON.stringify(updatedProduct),
+            }
+         );
+         if (response.status === 201) {
+            const data = await response.json();
+            dispatch({
+               type: "SELL_PRODUCT",
+               payload: data,
+            });
+         }
+      } catch (error) {
+         console.log(error);
+      }
+   };
    //purchases
    const fetchAllPurchases = async () => {
       try {
@@ -216,6 +240,7 @@ function InventoryContextProvider({ children }) {
             addPurchase,
             fetchAllSales,
             addSales,
+            sellProduct,
             changeDropdownState,
          }}
       >

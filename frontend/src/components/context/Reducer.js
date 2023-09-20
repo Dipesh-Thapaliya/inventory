@@ -60,6 +60,14 @@ export default function Reducer(state, action) {
             showDropdown: action.payload,
          };
 
+      case "SELL_PRODUCT":
+         return {
+            ...state,
+            products: state.products.map((product) =>
+               product._id === action.payload._id ? action.payload : product
+            ),
+         };
+
       default:
          return state;
    }

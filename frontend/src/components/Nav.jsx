@@ -26,7 +26,6 @@ export default function Nav() {
    useEffect(() => {
       (async () => {
          const products = await fetchExpiredProducts();
-         console.log(products);
          setExpired(products);
       })();
    }, []);

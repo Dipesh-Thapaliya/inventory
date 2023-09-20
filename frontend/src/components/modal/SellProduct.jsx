@@ -1,32 +1,40 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { FaSellcast } from "react-icons/fa";
+import InventoryContext from "../context/InventoryContext";
 
-export default function SaleProduct({ quntity }) {
+export default function SaleProduct({ product }) {
    const [valError, setValError] = useState(false);
+   const [quantity, setQuantity] = useState(0);
+
+   const { addSales, sellProduct } = useContext(InventoryContext);
 
    const modalShow = () => {
-      document.querySelector("#my_modal_1").showModal();
+      document.querySelector(`#my_modal_${product._id}`).showModal();
    };
 
    const checkQuantity = (e) => {
       const inputQuantity = e.target.value;
-      inputQuantity > quntity ? setValError(true) : setValError(false);
+      setQuantity(inputQuantity);
+      inputQuantity > product.quantity ? setValError(true) : setValError(false);
    };
 
-   const sellProduct=()=>{
-      try{
-         fetch()
-      }catch(e){
-         console.log(e)
+   const productSold = () => {
+      if (quantity > 0) {
+         addSales(product);
+         sellProduct(product, quantity);
+         document.querySelector(`#my_modal_${product._id} #quantity`).value =
+            "";
+         document.querySelector(`#my_modal_${product._id}`).close();
       }
-   }
+   };
+
    return (
       <div>
          <FaSellcast
             className="text-green-500 hover:cursor-pointer transition-all duration-150 hover:scale-125"
             onClick={modalShow}
          />
-         <dialog id="my_modal_1" className="modal">
+         <dialog id={`my_modal_${product._id}`} className="modal">
             <div className="w-full">
                <form
                   method="dialog"
@@ -34,18 +42,18 @@ export default function SaleProduct({ quntity }) {
                >
                   <div className="mb-4">
                      <label
-                        className="block text-gray-700 text-sm font-bold mb-2 "
+                        className="block text-gray-700 text-sm font-bold mb-2"
                         htmlFor="quantity"
                      >
-                        quantity{" "}
+                        Quantity
                      </label>
                      <input
                         className={`${
                            valError && "border-red-500"
-                        } shadow appearance-none border  rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`}
+                        } shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`}
                         id="quantity"
                         type="text"
-                        placeholder="quantity"
+                        placeholder="Quantity"
                         onChange={checkQuantity}
                      />
                   </div>
@@ -54,9 +62,11 @@ export default function SaleProduct({ quntity }) {
                      <button
                         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                         type="button"
-                        onClick={sellProduct}
+                        onClick={() => {
+                           productSold(product);
+                        }}
                      >
-                        sell
+                        Sell
                      </button>
                   </div>
                </form>

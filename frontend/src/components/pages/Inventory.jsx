@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { Link } from "react-router-dom";
 
 import InventoryContext from "../context/InventoryContext";
-import SaleProduct from "../modal/SaleProduct";
+import SellProduct from "../modal/SellProduct";
 
 import { FaEdit, FaTrash } from "react-icons/fa";
 
@@ -29,7 +29,7 @@ export default function Inventory() {
                </tr>
             </thead>
             <tbody className="text-md">
-               {products.map((product, index) => {
+               {products?.map((product, index) => {
                   return (
                      <tr
                         key={product._id}
@@ -44,7 +44,7 @@ export default function Inventory() {
                               <Link to={`/inventory/edit/${product._id}`}>
                                  <FaEdit className="text-blue-500 transition-all duration-150 hover:scale-125" />
                               </Link>
-                              <SaleProduct quntity={product.quantity} />
+                              <SellProduct product={product} />
                               <FaTrash className="text-red-500 hover:cursor-pointer transition-all duration-150 hover:scale-125" />
                            </div>
                         </td>

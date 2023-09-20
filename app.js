@@ -20,10 +20,10 @@ app.use("/api/products", productRouter);
 app.use("/api/sales", salesRouter);
 app.use("/api/purchased", purchasedRouter);
 
-app.get("/", (req, res) => {
+app.get("/hello", (req, res) => {
    res.send("Hello World");
 });
 
 app.listen(5000, () => {
-   console.log("Server started");
+   console.log("Server started on port 5000");
 });
