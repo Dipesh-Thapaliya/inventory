@@ -19,8 +19,8 @@ export default function SaleProduct({ product }) {
    };
 
    const productSold = () => {
-      if (quantity > 0) {
-         addSales(product);
+      if (quantity > 0 && !valError) {
+         addSales(product, quantity);
          sellProduct(product, quantity);
          document.querySelector(`#my_modal_${product._id} #quantity`).value =
             "";
@@ -60,7 +60,11 @@ export default function SaleProduct({ product }) {
 
                   <div className="flex items-center justify-center">
                      <button
-                        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                        className={` text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline ${
+                           valError
+                              ? "bg-gray-500 hover:bg-gray-700"
+                              : "bg-blue-500 hover:bg-blue-700"
+                        }`}
                         type="button"
                         onClick={() => {
                            productSold(product);

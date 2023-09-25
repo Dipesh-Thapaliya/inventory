@@ -21,5 +21,5 @@ export const addSale = asyncHandler(async (req, res) => {
       quantity,
       customerName,
    });
-   res.json(response);
+   res.status(201).json(response);
 });

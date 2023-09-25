@@ -1,5 +1,5 @@
 import "./App.css";
-import Nav from "./components/Nav";
+import Nav from "./components/headers/Nav";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 import NotFound from "./components/PageNotFound";
@@ -9,6 +9,7 @@ import Sidebar from "./components/Sidebar";
 import Inventory from "./components/pages/Inventory";
 import Purchases from "./components/pages/Purchases";
 import Sales from "./components/pages/Sales";
+import EditProduct from "./components/pages/edit/EditProduct";
 
 import { InventoryContextProvider } from "./components/context/InventoryContext";
 
@@ -34,14 +35,17 @@ function App() {
                            element={<Inventory />}
                         />
                         <Route path="/inventory/add" exact element={<Add />} />
-
+                        <Route
+                           path="inventory/edit/:id"
+                           exact
+                           element={<EditProduct />}
+                        />
                         <Route path="/sales" exact element={<Sales />} />
                         <Route
                            path="/purchases"
                            exact
                            element={<Purchases />}
                         />
-
                         <Route path="/*" element={<NotFound />} />
                      </Routes>
                   </div>

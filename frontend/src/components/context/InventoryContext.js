@@ -16,6 +16,21 @@ function InventoryContextProvider({ children }) {
    const navigate = useNavigate();
 
    //products / add, update, delete, fetch
+
+   const fetchProductById = async (id) => {
+      try {
+         const response = await fetch(
+            `${process.env.REACT_APP_SERVER}/products/${id}`
+         );
+         if (response.status === 200) {
+            const data = await response.json();
+            return data;
+         }
+      } catch (error) {
+         console.log(error);
+      }
+   };
+
    const fetchAllProducts = async () => {
       try {
          const response = await fetch(
@@ -129,6 +144,34 @@ function InventoryContextProvider({ children }) {
          console.log(error);
       }
    };
+
+   const editProduct = async (product) => {
+      try {
+         // console.log(product.id);
+         const response = await fetch(
+            `${process.env.REACT_APP_SERVER}/products/${product._id}`,
+            {
+               method: "PUT",
+               headers: {
+                  "Content-Type": "application/json",
+               },
+               body: JSON.stringify(product),
+            }
+         );
+         if (response.status === 201) {
+            await fetchAllProducts();
+
+            const data = await response.json();
+            dispatch({
+               type: "SELL_PRODUCT",
+               payload: data,
+            });
+         }
+      } catch (err) {
+         console.log(err);
+      }
+   };
+
    //purchases
    const fetchAllPurchases = async () => {
       try {
@@ -187,14 +230,14 @@ function InventoryContextProvider({ children }) {
       }
    };
 
-   const addSales = async (sales) => {
+   const addSales = async (product, quantity) => {
       try {
          const response = await fetch(`${process.env.REACT_APP_SERVER}/sales`, {
             method: "POST",
             headers: {
                "Content-Type": "application/json",
             },
-            body: JSON.stringify(sales),
+            body: JSON.stringify({ ...product, quantity }),
          });
          if (response.status === 201) {
             const data = await response.json();
@@ -232,6 +275,7 @@ function InventoryContextProvider({ children }) {
       <InventoryContext.Provider
          value={{
             ...state,
+            fetchProductById,
             fetchAllProducts,
             deleteProduct,
             addProduct,
@@ -241,6 +285,7 @@ function InventoryContextProvider({ children }) {
             fetchAllSales,
             addSales,
             sellProduct,
+            editProduct,
             changeDropdownState,
          }}
       >

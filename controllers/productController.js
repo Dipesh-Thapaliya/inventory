@@ -26,15 +26,15 @@ export const deleteProduct = asyncHandler(async (req, res) => {
    res.status(201).json(deletedProduct);
 });
 
-// @desc    update product
+// @desc    edit product
 // @route   PUT /api/products/:id
-export const updateProduct = asyncHandler(async (req, res) => {
+export const editProduct = asyncHandler(async (req, res) => {
    const id = req.params.id;
    const request = req.body;
-   const updateProduct = await ProductModel.findByIdAndUpdate(id, request, {
+   const editProduct = await ProductModel.findByIdAndUpdate(id, request, {
       new: true,
    });
-   res.status(201).json(updateProduct);
+   res.status(201).json(editProduct);
 });
 
 // @desc    fetch about to expire product
@@ -50,6 +50,13 @@ export const fetchAboutToExpireProduct = asyncHandler(async (req, res) => {
       expiryDate: { $lt: formattedDate, $gt: today },
    });
    res.status(200).json(fetchProduct);
+});
 
-   // res.send("hello world");
+//@desc     fetch product using id
+//@route    GET /api/products/:id
+export const fetchProductById = asyncHandler(async (req, res) => {
+   console.log("fetch produc tby id");
+   const id = req.params.id;
+   const fetchProduct = await ProductModel.findById(id);
+   res.status(200).json(fetchProduct);
 });

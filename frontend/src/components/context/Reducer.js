@@ -51,7 +51,7 @@ export default function Reducer(state, action) {
       case "ADD_SALES":
          return {
             ...state,
-            sales: [...state.sales, action.payload],
+            sales: [action.payload, ...state.sales],
          };
 
       case "CHANGE_DROPDOWN_STATE":

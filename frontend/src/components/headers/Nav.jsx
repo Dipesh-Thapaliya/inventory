@@ -4,9 +4,9 @@ import { FaBell } from "react-icons/fa";
 
 import { useState, useEffect } from "react";
 
-import logo from "../assets/images/logo.png";
+import logo from "../../assets/images/logo.png";
 import Notifications from "./Notifications";
-import InventoryContext from "./context/InventoryContext";
+import InventoryContext from "../context/InventoryContext";
 
 const fetchExpiredProducts = async () => {
    try {
