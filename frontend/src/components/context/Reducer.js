@@ -68,6 +68,20 @@ export default function Reducer(state, action) {
             ),
          };
 
+      //manage cart
+      case "CHANGE_CART_STATE":
+         return {
+            ...state,
+            hideRightSidebar: action.payload.hideRightSidebar,
+            sidebarType: action.payload.sidebarType,
+         };
+
+      case "MANAGE_CART":
+         return {
+            ...state,
+            cart: action.payload,
+         };
+
       default:
          return state;
    }

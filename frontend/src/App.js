@@ -41,6 +41,7 @@ function App() {
                            element={<EditProduct />}
                         />
                         <Route path="/sales" exact element={<Sales />} />
+
                         <Route
                            path="/purchases"
                            exact

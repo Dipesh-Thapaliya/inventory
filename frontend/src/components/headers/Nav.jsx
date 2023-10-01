@@ -53,7 +53,7 @@ export default function Nav() {
                <div
                   className={` absolute -z-10 ${
                      showDropdown &&
-                     " top-12 -left-20   transition-all duration-100 scale-105"
+                     "z-10 top-12 -left-20   transition-all duration-100 scale-105"
                   } bottom-0`}
                >
                   <Notifications expired={expired} />

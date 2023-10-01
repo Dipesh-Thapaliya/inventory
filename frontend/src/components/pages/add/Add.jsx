@@ -7,16 +7,14 @@ export default function Add() {
 
    const { values, handleChange, handleSubmit } = useFormik({
       initialValues: {
-         name: "test",
-         quantity: "10",
-         price: "10",
-         expiryDate: "2023-07-26",
-         vendor: "rejens",
+         name: "",
+         quantity: "",
+         price: "",
+         expiryDate: "",
+         vendor: "",
       },
       onSubmit: async (values) => {
          addProduct(values);
-         // const { name, price, quantity, vendor } = values;
-         // const purchase = { name, price, quantity, vendor };
          addPurchase(values);
       },
    });

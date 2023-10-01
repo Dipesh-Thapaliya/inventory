@@ -6,7 +6,7 @@ import asyncHandler from "express-async-handler";
 
 export const getPurchased = asyncHandler(async (req, res) => {
    const response = await Purchased.find({}).sort({ createdAt: -1 });
-   res.json(response);
+   res.status(200).json(response);
 });
 
 // @desc    Add purchased data
@@ -14,5 +14,5 @@ export const getPurchased = asyncHandler(async (req, res) => {
 
 export const addPurchased = asyncHandler(async (req, res) => {
    const response = await Purchased.create(req.body);
-   res.json(response);
+   res.status(201).json(response);
 });

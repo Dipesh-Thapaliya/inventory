@@ -9,7 +9,7 @@ export default function Sidebar() {
                <NavLink
                   to="/"
                   activeClassName="active"
-                  className="py-2 px-5 text-xl text-gray-900 border-b-[1px] border-gray-200 block"
+                  className="py-2 px-5 text-xl text-gray-900 border-b-[1px] border-gray-200 block text-[#334155]"
                >
                   Dashboard
                </NavLink>
@@ -18,7 +18,7 @@ export default function Sidebar() {
                <NavLink
                   to="/inventory"
                   activeClassName="active"
-                  className="py-2 px-5 text-xl text-gray-900 border-b-[1px] border-gray-200 block"
+                  className="py-2 px-5 text-xl text-gray-900 border-b-[1px] border-gray-200 block text-[#334155]"
                >
                   Inventory
                </NavLink>
@@ -27,7 +27,7 @@ export default function Sidebar() {
                <NavLink
                   to="/purchases"
                   activeClassName="active"
-                  className="py-2 px-5 text-xl text-gray-900 border-b-[1px] border-gray-200 block"
+                  className="py-2 px-5 text-xl text-gray-900 border-b-[1px] border-gray-200 block text-[#334155]"
                >
                   Purchases
                </NavLink>
@@ -36,7 +36,7 @@ export default function Sidebar() {
                <NavLink
                   to="/sales"
                   activeClassName="active"
-                  className="py-2 px-5 text-xl text-gray-900 border-b-[1px] border-gray-200 block"
+                  className="py-2 px-5 text-xl text-gray-900 border-b-[1px] border-gray-200 block text-[#334155]"
                >
                   Sales
                </NavLink>
